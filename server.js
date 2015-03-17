@@ -1,24 +1,10 @@
-var http = require('http');
-var url = require('url');
+var server = require('express')();
+var http = require('http').createServer(server);
 
-var server = http.createServer(function(request, response){
-  console.log("Server ON");
-
-  var path = url.parse(request.url).pathname;
-
-  switch(path){
-    case '/':
-    response.writeHead(200, {'content-Type': 'text/html'});
-    response.write("Hello World - this is a hand written node server.")
-      break;
-    default:
-      response.writeHead(404);
-      response.write('404: nothing here...')
-  }
-
-  response.end();
-
+server.get('/', function(request, response){
+  response.send('<h1>Hello and Welcome on my Express server</h1>')
 });
 
-server.listen(3000);
-console.log("Server up and running.")
+http.listen(3000, function(){
+  console.log('Listening on port 3000')
+});
